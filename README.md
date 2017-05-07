@@ -17,6 +17,6 @@ Usamos los siguientes componentes:
 
 ## Librerias necesarias:
 
-- LCD, se encuentra comprimida en el directorio de LCD_I2C/. [enlace?](https://github.com/fdebrabander/)Arduino-LiquidCrystal-I2C-library/blob/master/examples/HelloWorld/HelloWorld.ino
+- LCD, se encuentra comprimida en el directorio de LCD_I2C/. [Enlace a git](https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library)
 - RFID, [liberia de KOOKYE (fabricante)](http://osoyoo.com/driver/ArduinoRFID.rar)
 - Teclado Matricial, [liberia de KOOKYE (fabricante)](http://osoyoo.com/wp-content/uploads/2016/07/Keypad.rar)

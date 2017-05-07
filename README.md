@@ -7,15 +7,16 @@ Usamos los siguientes componentes:
 
 - 1x Raspberry 2.
 - 2x Arduino Uno rev. 2.
-- LCD comunicado por I2C para ahorrar pines.
+- LCD comunicado por I2C.
 - Teclado matricial.
 - Sensor RFID.
+- Servomotor.
 - LEDs.
 - Zumbador.
 
 
 ## Librerias necesarias:
 
-- LCD, se encuentra comprimida en el directorio de LCD_I2C/. [enlace?]:https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library/blob/master/examples/HelloWorld/HelloWorld.ino
-- RFID, [liberia de KOOKYE (fabricante)]:http://osoyoo.com/driver/ArduinoRFID.rar
-- Teclado Matricial, [liberia de KOOKYE (fabricante)]:http://osoyoo.com/wp-content/uploads/2016/07/Keypad.rar
+- LCD, se encuentra comprimida en el directorio de LCD_I2C/. [enlace?](https://github.com/fdebrabander/)Arduino-LiquidCrystal-I2C-library/blob/master/examples/HelloWorld/HelloWorld.ino
+- RFID, [liberia de KOOKYE (fabricante)](http://osoyoo.com/driver/ArduinoRFID.rar)
+- Teclado Matricial, [liberia de KOOKYE (fabricante)](http://osoyoo.com/wp-content/uploads/2016/07/Keypad.rar)

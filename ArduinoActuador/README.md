@@ -1,4 +1,4 @@
-#Comportamiento Arduino actuador
+# Comportamiento Arduino actuador
 
 
 El Arduino actuador será el encargado de recibir las órdenes de la Raspberry Pi, que a su vez recibirá información de los sensores del Arduino sensor.

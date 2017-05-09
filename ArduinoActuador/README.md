@@ -15,18 +15,23 @@ Mensaje: "Unknown user. U shall not pass"
 
 - Mostrar un mensaje cuando la tarjeta RFID se reconozca de un usuario conocido, pidiendole que introduzca su clave personal.
 Se acompañará con una señal sonora.
-Mensaje: "Type your key"
+Mensaje: "Enter your key"
 
 - Mostrar '*' cuando un usuario vaya introduciendo los dígitos de su clave.
 Se acompañará con una señal sonora.
 
-- Eliminar los dígitos de la pantalla si un usuario decide borrar alguno.
+- Eliminar los dígitos de la pantalla si un usuario quiere borrar la clave.
 Se acompañará con una señal sonora.
 
 - Mostrar un mensaje cuando la contraseña introducida por el usuario sea incorrecta.
 Tras un lapso de tiempo, podrá volver a introducir la contraseña.
 Se acompañará con una señal sonora.
 Mensaje: "Wrong password. Try again..."
+
+- Mostrar un mensaje cuando un usuario supere el número máximo de intentos para introducir su clave. 
+Se acompañará con una señal sonora.
+Mensaje: "Max attemps reached"
+
 
 - Mostrar un mensaje cuando la contraseña sea correcta, abriendo la puerta girando el servomotor. Tras unos segundos, el sistema avisará de que se va a cerrar la puerta. En otro breve instante de tiempo, el sistema volverá al estado inicial con la puerta cerrada.
 Se acompañará con una señal sonora.

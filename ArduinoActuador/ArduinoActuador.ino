@@ -52,7 +52,7 @@ void loop(){
       delay(2000);
       initLCD();
       break;
-    case 'm': // La tarjeta RFID no esta reconocida
+    case 'm': // Se ha alcanzado el máximo número de intentos para introducir la clave
       limpiaLCD();
       lcd.print("Max attemps");
       lcd.setCursor(0, 1);

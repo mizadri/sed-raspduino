@@ -31,6 +31,7 @@ void setup(){
   Serial.begin(9600);   // Initiate a serial communication
   SPI.begin();      // Initiate  SPI bus
   mfrc522.PCD_Init();   // Initiate MFRC522
+  Serial.println("Approximate your card to the reader...");
   Serial.println();
 
 }
@@ -50,6 +51,7 @@ void loop()
     if (customKey){
       
       if(customKey == '#'){
+           Serial.println("Se borra la clave.");
            borraClave();
       }
       else if(customKey == '*'){
@@ -62,16 +64,19 @@ void loop()
           }
           
           if (correcto){
+              Serial.println("¡Clave correcta!");
               autorizado = false;
               nIntentos = 0;
               borraClave();
               //Hacer cosas de abrir cajas
           }else{
+              Serial.println("¡Clave incorrecta!");
               // Si falla muchas veces o timer quitar la autorizacion a RFID
               nIntentos++;
               borraClave();
               if (nIntentos == maxIntentos){
                 // mandar aviso de que ha superado intentos
+                Serial.println("Has superado el numero de intentos permitido :(");
                 nIntentos = 0;
                 autorizado = false;
               }
@@ -110,15 +115,18 @@ void loop()
        content.concat(String(mfrc522.uid.uidByte[i], HEX));
     }
     Serial.println();
+    Serial.print("Message : ");
     content.toUpperCase();
     
     if (content.substring(1) == "30 13 D2 7E" || content.substring(1) == "E0 DD 5F 7E"){
+      Serial.println("Authorized access");
       Serial.println();
       autorizado = true;
       delay(3000);
     }
    
    else{
+      Serial.println(" Access denied");
       autorizado = false;
       delay(3000);
     }

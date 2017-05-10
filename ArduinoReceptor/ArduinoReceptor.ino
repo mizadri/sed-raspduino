@@ -49,10 +49,12 @@ void loop()
   
     if (customKey){
       
-      if(customKey == '#'){
+      if(customKey == '#'){ // Borrar intento de clave actual
            borraClave();
+	   pos = 0;
+	   // Mandar a Raspy una señal de que se ha borrado la clave
       }
-      else if(customKey == '*'){
+      else if(customKey == '*'){ // Comprobar clave 
         
           int correcto = 1;  
           for(int i = 0; i < 4; i++){
@@ -64,28 +66,34 @@ void loop()
           if (correcto){
               autorizado = false;
               nIntentos = 0;
-              borraClave();
-              //Hacer cosas de abrir cajas
+              // Hacer cosas de abrir cajas
           }else{
               // Si falla muchas veces o timer quitar la autorizacion a RFID
               nIntentos++;
-              borraClave();
               if (nIntentos == maxIntentos){
-                // mandar aviso de que ha superado intentos
+                // mandar aviso a Raspy de que ha superado intentos
                 nIntentos = 0;
                 autorizado = false;
               }
+	      else{
+		 // mandar aviso a Raspy de clave erronea	
+	      }
           }
-          
+	  pos = 0; 
+	  borraClave();
+       /*
           for(int i = 0; i < 4; i++){
                   Serial.print(INTENTO[i]);
           }
           Serial.println();
-  
+  	*/  
           
       }else{
+	 // Enviar mensaje a Raspy de que se ha pulsado tecla "normal"
+	 if (pos < 3){
           INTENTO[pos] = customKey;
           pos = (pos + 1)% 4;
+	}
       }
       delay(100);
     }
@@ -111,15 +119,19 @@ void loop()
     }
     Serial.println();
     content.toUpperCase();
+     // Enviar mensaje a Raspy con el RFID UID a comprobar
+     // Recibir la respuesta de la Raspy, con un "false" o la clave del usuario si es conocido  
     
     if (content.substring(1) == "30 13 D2 7E" || content.substring(1) == "E0 DD 5F 7E"){
       Serial.println();
       autorizado = true;
+      // Enviar mensaje a Raspy de que es reconocido el RFID
       delay(3000);
     }
    
    else{
       autorizado = false;
+      // Enviar mensaje a Raspy de que no es reconocido el RFID
       delay(3000);
     }
   }

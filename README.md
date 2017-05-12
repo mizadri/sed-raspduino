@@ -3,7 +3,7 @@ Proyecto que comunica dos Arduinos y una Raspberry para implementar un sistema d
 
 ## Diseño del sistema
 
-![Diagrama de diseño](./SED_bb.png)
+![Diagrama de diseño](./doc/SED_bb.png)
 
 
 ## Componentes usados:

@@ -53,6 +53,7 @@ void loop()
            borraClave();
 	   pos = 0;
 	   // Mandar a Raspy una señal de que se ha borrado la clave
+	   Serial.println("remove");
       }
       else if(customKey == '*'){ // Comprobar clave 
         
@@ -67,18 +68,22 @@ void loop()
               autorizado = false;
               nIntentos = 0;
               // Hacer cosas de abrir cajas
+              Serial.println("correct");
           }else{
               // Si falla muchas veces o timer quitar la autorizacion a RFID
               nIntentos++;
               if (nIntentos == maxIntentos){
-                // mandar aviso a Raspy de que ha superado intentos
-                nIntentos = 0;
-                autorizado = false;
-              }
-	      else{
-		 // mandar aviso a Raspy de clave erronea	
-	      }
-          }
+					// mandar aviso a Raspy de que ha superado intentos
+					Serial.println("max_attempts");
+					nIntentos = 0;
+					autorizado = false;
+				  }
+			  else{
+					// mandar aviso a Raspy de clave erronea	
+				   Serial.println("incorrect");
+
+			  }
+			}
 	  pos = 0; 
 	  borraClave();
        /*
@@ -86,19 +91,21 @@ void loop()
                   Serial.print(INTENTO[i]);
           }
           Serial.println();
-  	*/  
-          
-      }else{
-	 // Enviar mensaje a Raspy de que se ha pulsado tecla "normal"
-	 if (pos < 3){
-          INTENTO[pos] = customKey;
-          pos = (pos + 1)% 4;
-	}
+  	*/     
+      }
+      else{
+		 // Enviar mensaje a Raspy de que se ha pulsado tecla "normal"
+		 Serial.println("key");
+		 if (pos < 3){
+			  INTENTO[pos] = customKey;
+			  pos = (pos + 1)% 4;
+		 }
       }
       delay(100);
     }
 
-  }else{
+  }
+  else{
     // Look for new cards
     if ( ! mfrc522.PICC_IsNewCardPresent()){
       return;
@@ -108,7 +115,7 @@ void loop()
       return;
     }
     //Show UID on serial monitor
-    Serial.print("UID tag :");
+    Serial.print("UID :");
     String content= "";
     byte letter;
     for (byte i = 0; i < mfrc522.uid.size; i++){
@@ -117,23 +124,35 @@ void loop()
        content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
        content.concat(String(mfrc522.uid.uidByte[i], HEX));
     }
-    Serial.println();
-    content.toUpperCase();
+     Serial.println();
+     content.toUpperCase();
      // Enviar mensaje a Raspy con el RFID UID a comprobar
+     
      // Recibir la respuesta de la Raspy, con un "false" o la clave del usuario si es conocido  
+    String mensaje = Serial.readString();
+    if (mensaje != "FALSE"){
+		// Guardar la clave para comprobar con lo que introduzca el usuario por teclado
+		autorizado = true;
+        delay(3000);
+        delay(3000);
+    }
+    else{
+		autorizado = false;
+        delay(3000); 
+    }
     
+    /*
     if (content.substring(1) == "30 13 D2 7E" || content.substring(1) == "E0 DD 5F 7E"){
       Serial.println();
       autorizado = true;
-      // Enviar mensaje a Raspy de que es reconocido el RFID
       delay(3000);
     }
    
    else{
       autorizado = false;
-      // Enviar mensaje a Raspy de que no es reconocido el RFID
       delay(3000);
     }
+    */
   }
   
 

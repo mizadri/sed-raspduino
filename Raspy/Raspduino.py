@@ -20,7 +20,7 @@ while continuar:
 	mensaje = arduinoSensor.readline()
 	# print(mensaje)
 
-	if mensaje.split(':')[0] == "UID : ":
+	if mensaje.split(':')[0] == "UID :":
                 rfid_uid =  mensaje.split(':')[1]
                 res = consultaUsuario(rfid_uid)
                 arduinoSensor.write(res)
@@ -58,9 +58,10 @@ def run_query(query):
     return data
 
 def consultaUsuario(rfid):
-     result = run_query('SELECT * FROM usuarios')
-     if result == blablabla:
-             
+     result = run_query('SELECT codAcceso FROM usuarios WHERE codRFID=' + rfid)
+     if result == None:
+             res = False
      else:
-
-     return result        
+             res = result[0]
+             
+     return res        

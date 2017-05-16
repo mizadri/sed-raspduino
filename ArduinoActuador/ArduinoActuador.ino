@@ -54,7 +54,7 @@ void loop(){
       break;
     case 'm': // Se ha alcanzado el máximo número de intentos para introducir la clave
       limpiaLCD();
-      lcd.print("Max attemps");
+      lcd.print("Max attempts");
       lcd.setCursor(0, 1);
       lcd.print("reached");   
       wrong_tone();       

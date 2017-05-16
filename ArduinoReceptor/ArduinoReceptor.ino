@@ -45,65 +45,58 @@ void loop()
 {
     // Solo entra a comprobar la password si se ha reconocido un RFID valido
     if (autorizado){
-    char customKey = customKeypad.getKey();
+      char customKey = customKeypad.getKey();
   
-    if (customKey){
-      
-      if(customKey == '#'){ // Borrar intento de clave actual
-           borraClave();
-	   pos = 0;
-	   // Mandar a Raspy una señal de que se ha borrado la clave
-	   Serial.println("remove");
-      }
-      else if(customKey == '*'){ // Comprobar clave 
-        
-          int correcto = 1;  
-          for(int i = 0; i < 4; i++){
-            if(INTENTO[i] != CLAVE[i]){
-              correcto = 0;
+          if (customKey){
+            
+            if(customKey == '#'){ // Borrar intento de clave actual
+                 borraClave();
+                 pos = 0;
+                 // Mandar a Raspy una señal de que se ha borrado la clave
+                 Serial.println("remove");
             }
-          }
-          
-          if (correcto){
-              autorizado = false;
-              nIntentos = 0;
-              // Hacer cosas de abrir cajas
-              Serial.println("correct");
-          }
+            else if(customKey == '*'){ // Comprobar clave 
+              
+                int correcto = 1;  
+                for(int i = 0; i < 4; i++){
+                  if(INTENTO[i] != CLAVE[i]){
+                    correcto = 0;
+                  }
+                }
+                
+                if (correcto){
+                    autorizado = false;
+                    nIntentos = 0;
+                    // Hacer cosas de abrir cajas
+                    Serial.println("correct");
+                }
+                else{
+                    // Si falla muchas veces o timer quitar la autorizacion a RFID
+                    nIntentos++;
+                    if (nIntentos == maxIntentos){
+                          // mandar aviso a Raspy de que ha superado intentos
+                          Serial.println("max_attempts");
+                          nIntentos = 0;
+                          autorizado = false;
+                    }
+                    else{
+                      // mandar aviso a Raspy de clave erronea  
+                       Serial.println("incorrect");
+                    }
+                }
+                pos = 0; 
+                borraClave();
+           }
           else{
-              // Si falla muchas veces o timer quitar la autorizacion a RFID
-              nIntentos++;
-               if (nIntentos == maxIntentos){
-          					// mandar aviso a Raspy de que ha superado intentos
-          					Serial.println("max_attempts");
-          					nIntentos = 0;
-          					autorizado = false;
-    				  }
-			  else{
-					// mandar aviso a Raspy de clave erronea	
-				   Serial.println("incorrect");
-
-			  }
-			}
-	  pos = 0; 
-	  borraClave();
-       /*
-          for(int i = 0; i < 4; i++){
-                  Serial.print(INTENTO[i]);
+               // Enviar mensaje a Raspy de que se ha pulsado tecla "normal"
+               Serial.println("key");
+               if (pos < 4){
+                  INTENTO[pos] = customKey;
+                  pos++;
+               }
           }
-          Serial.println();
-  	*/     
+            delay(100);
       }
-      else{
-		 // Enviar mensaje a Raspy de que se ha pulsado tecla "normal"
-		 Serial.println("key");
-		 if (pos < 3){
-			  INTENTO[pos] = customKey;
-			  pos = (pos + 1)% 4;
-		 }
-      }
-      delay(100);
-    }
 
   }
   else{
@@ -126,37 +119,23 @@ void loop()
        content.concat(String(mfrc522.uid.uidByte[i], HEX));
     }
      content.toUpperCase();
-     Serial.println(content);
      // Enviar mensaje a Raspy con el RFID UID a comprobar
+     Serial.println(content);
      
      // Recibir la respuesta de la Raspy, con un "false" o la clave del usuario si es conocido  
     String mensaje = Serial.readString();
     if (mensaje != "FALSE"){
-		// Guardar la clave para comprobar con lo que introduzca el usuario por teclado
-		autorizado = true;
-      for(int i = 0; i < 4; i++){
-        CLAVE[i] = mensaje[i];
-      }
-        delay(3000);
-        delay(3000);
+        autorizado = true;
+        // Guardar la clave para comprobar con lo que introduzca el usuario por teclado
+        for(int i = 0; i < 4; i++){
+          CLAVE[i] = mensaje[i];
+          Serial.println(CLAVE[i]);
+        }
     }
     else{
-		autorizado = false;
-        delay(3000); 
+      autorizado = false;
     }
     
-    /*
-    if (content.substring(1) == "30 13 D2 7E" || content.substring(1) == "E0 DD 5F 7E"){
-      Serial.println();
-      autorizado = true;
-      delay(3000);
-    }
-   
-   else{
-      autorizado = false;
-      delay(3000);
-    }
-    */
   }
   
 

@@ -5,7 +5,7 @@
 #define SS_PIN 10
 #define RST_PIN 9
 
-char CLAVE[4] = {'1','9','9','3'};
+char CLAVE[4];
 char INTENTO[4] = {'X', 'X', 'X', 'X'};
 int pos = 0;
 int maxIntentos = 3;

@@ -5,7 +5,7 @@
 #define SS_PIN 10
 #define RST_PIN 9
 
-const char CLAVE[4] = {'1','9','9','3'};
+char CLAVE[4] = {'1','9','9','3'};
 char INTENTO[4] = {'X', 'X', 'X', 'X'};
 int pos = 0;
 int maxIntentos = 3;
@@ -69,15 +69,16 @@ void loop()
               nIntentos = 0;
               // Hacer cosas de abrir cajas
               Serial.println("correct");
-          }else{
+          }
+          else{
               // Si falla muchas veces o timer quitar la autorizacion a RFID
               nIntentos++;
-              if (nIntentos == maxIntentos){
-					// mandar aviso a Raspy de que ha superado intentos
-					Serial.println("max_attempts");
-					nIntentos = 0;
-					autorizado = false;
-				  }
+               if (nIntentos == maxIntentos){
+          					// mandar aviso a Raspy de que ha superado intentos
+          					Serial.println("max_attempts");
+          					nIntentos = 0;
+          					autorizado = false;
+    				  }
 			  else{
 					// mandar aviso a Raspy de clave erronea	
 				   Serial.println("incorrect");
@@ -115,17 +116,17 @@ void loop()
       return;
     }
     //Show UID on serial monitor
-    Serial.print("UID :");
+    Serial.print("UID:");
     String content= "";
     byte letter;
     for (byte i = 0; i < mfrc522.uid.size; i++){
-       Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
-       Serial.print(mfrc522.uid.uidByte[i], HEX);
-       content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
+       //Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " ");
+       //Serial.print(mfrc522.uid.uidByte[i], HEX);
+       content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : ""));
        content.concat(String(mfrc522.uid.uidByte[i], HEX));
     }
-     Serial.println();
      content.toUpperCase();
+     Serial.println(content);
      // Enviar mensaje a Raspy con el RFID UID a comprobar
      
      // Recibir la respuesta de la Raspy, con un "false" o la clave del usuario si es conocido  
@@ -133,6 +134,9 @@ void loop()
     if (mensaje != "FALSE"){
 		// Guardar la clave para comprobar con lo que introduzca el usuario por teclado
 		autorizado = true;
+      for(int i = 0; i < 4; i++){
+        CLAVE[i] = mensaje[i];
+      }
         delay(3000);
         delay(3000);
     }

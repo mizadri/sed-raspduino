@@ -129,7 +129,6 @@ void loop()
         // Guardar la clave para comprobar con lo que introduzca el usuario por teclado
         for(int i = 0; i < 4; i++){
           CLAVE[i] = mensaje[i];
-          Serial.println(CLAVE[i]);
         }
     }
     else{

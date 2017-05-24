@@ -33,7 +33,7 @@ def consultaUsuario(rfid):
 # Informacion base de datos 
 DB_HOST = 'localhost' 
 DB_USER = 'root' 
-DB_PASS = 'VillerKulla1993' # Completar!!
+DB_PASS = '' # Completar!!
 DB_NAME = 'sed'
  
 #Arduino con RFID y Teclado

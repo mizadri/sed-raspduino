@@ -1,27 +1,27 @@
 # sed-raspduino
-Proyecto que comunica dos Arduinos y una Raspberry para implementar un sistema de doble autenticación usando un lector RFID y contraseñas. Fue realizado para la asignatura Sistemas Empotrados Distribuidos. En el repo hay una serie de códigos base y luego los archivos que juntaran varias librerias para usar en las diferentes dispositivos.
+Double authentication system with RFID and password using 2 Arduino Uno boards and a Raspberry Pi 2. It was developed in the context of the master's subject Distributed Embedded Systems. In this repository you will find the base code of the systems and links to the required libraries used to interact with the various sensors.
 
-## Diseño del sistema
+## System design
 
-![Diagrama de diseño](./doc/SED_bb.png)
+![System design](./doc/SED_bb.png)
 
 
-## Componentes usados:
+## Materials:
 
-Usamos los siguientes componentes:
+We used the following components::
 
 - 1x Raspberry 2.
 - 2x Arduino Uno rev. 2.
-- LCD comunicado por I2C.
-- Teclado matricial.
-- Sensor RFID.
-- Servomotor.
+- LCD via I2C.
+- Matrix keyboard.
+- RFID sensor.
+- Servo.
 - LEDs.
-- Zumbador.
+- Buzzer.
 
 
-## Librerias necesarias:
+## Libraries:
 
-- LCD, se encuentra comprimida en el directorio de LCD_I2C/. [Enlace a git](https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library)
-- RFID, [liberia](https://github.com/AritroMukherjee/RFID/blob/master/rfid-master.zip)
-- Teclado Matricial, [liberia de KOOKYE (fabricante)](http://osoyoo.com/wp-content/uploads/2016/07/Keypad.rar)
+- LCD, it is zipped in the following dir "LCD_I2C/". [Link to git](https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library)
+- RFID, [library](https://github.com/AritroMukherjee/RFID/blob/master/rfid-master.zip)
+- Matrix keyboard, [KOOKYE library (builder)](http://osoyoo.com/wp-content/uploads/2016/07/Keypad.rar)
